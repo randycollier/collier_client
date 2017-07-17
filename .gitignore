@@ -11,6 +11,7 @@
 *~
 *.sass-cache
 
+#node
 node_modules
 
 # OS or Editor folders
