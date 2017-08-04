@@ -1,0 +1,10 @@
+FROM mhart/alpine-node:latest
+
+WORKDIR /client
+COPY ./package.json /client
+
+RUN rm -rf node_modules
+RUN npm update -g
+RUN npm install webpack@3.3.0 -g --silent
+RUN npm install --silent
+CMD webpack --watch
