@@ -1,26 +1,19 @@
 version: '3'
 services:
-  nginx:
-    build: ./docker/nginx
-    container_name: collierclient-nginx
-    ports:
-      - "8000:8000"
-    volumes:
-      - wwwroot:/wwwroot
-  webpack:
+  web:
     build:
       context: .
-      dockerfile: Dockerfile-dev
-    container_name: collierclient-node
+      dockerfile: Dockerfile-new
+    entrypoint: /wwwroot/docker-entrypoint.js
+    container_name: gwiclient-web
     environment:
-      - API_URL=http://localhost:8080
-      - NODE_ENV=development
+      API_URL: http://localhost:8080
     ports:
+      - "8000:80"
       - "35729:35729" # for live reload
     volumes:
-      - .:/client
-      - /client/node_modules
-      - wwwroot:/client/public
+      - .:/wwwroot
+      - /wwwroot/node_modules
 volumes:
   wwwroot:
     driver: local

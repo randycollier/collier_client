@@ -1,10 +1,18 @@
 FROM mhart/alpine-node:latest
 
-WORKDIR /client
-COPY ./package.json /client
 
+
+COPY . /client
+WORKDIR /client
+RUN npm install
 RUN rm -rf node_modules
-RUN npm update -g
-RUN npm install webpack@3.0.0 -g --silent
-RUN NPM install --silent
+RUN yarn install
+RUN yarn upgrade
+RUN yarn add webpack@3.0.0 -g --silent
+RUN yarn install --silent
+RUN yarn run start
 CMD webpack --watch
+
+# watchOptions: {
+#    poll: true
+#}

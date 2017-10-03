@@ -2,6 +2,7 @@
     ./webpack.config.js
 */
 const path = require('path');
+const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -11,7 +12,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 module.exports = {
-  entry: './src/index.js',
+  entry: path.resolve('./src/index.js'),
   output: {
     filename: 'index_bundle.js',
     path: path.resolve(__dirname, 'public'),
@@ -19,8 +20,13 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
+      { test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'react']
+        }
+      },
     ]
   },
   plugins: [HtmlWebpackPluginConfig]

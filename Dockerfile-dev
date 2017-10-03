@@ -1,10 +1,14 @@
-FROM mhart/alpine-node:latest
+FROM node:8.1.4-alpine
+RUN npm install webpack -g
 
-WORKDIR /client
-COPY ./package.json /client
+RUN mkdir /wwwroot
+# RUN mkdir -p /run/nginx
+$ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN rm -rf node_modules
-RUN npm update -g
-RUN npm install webpack@3.3.0 -g --silent
-RUN npm install --silent
-CMD webpack --watch
+WORKDIR /wwwroot
+COPY . /wwwroot
+RUN rm -rf ./public/*.bundle.js
+# RUN npm install --loglevel warn
+CMD [ “NPM run start”]
+RUN apk add --no-cache nginx
+EXPOSE 80
